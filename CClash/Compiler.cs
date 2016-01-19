@@ -528,7 +528,7 @@ namespace CClash
                                 if (!Path.IsPathRooted(ResponseFile))
                                     ResponseFile = Path.Combine(WorkingDirectory, ResponseFile);
                                 string rsptxt = File.ReadAllText(ResponseFile);
-                                if (rsptxt.Length < 2047)
+                                if (rsptxt.Length < 8191)
                                 // windows max command line, this is why they invented response files
                                 {
                                     Logging.Emit("response data [{0}]", rsptxt);
@@ -826,8 +826,8 @@ namespace CClash
                             if (onStdOut != null) {
                                 onStdOut(a.Data + Environment.NewLine);
                             }
-                            if (Settings.DebugEnabled)
-                                Logging.Emit("stdout {0}", a.Data);
+                            //if (Settings.DebugEnabled)
+                            //    Logging.Emit("stdout {0}", a.Data);
                         }
                     }
 
@@ -867,7 +867,7 @@ namespace CClash
                             sw.Start();
                             int waited = 0;
 
-                            while (!File.Exists(ObjectTarget) && (sw.ElapsedMilliseconds < 10000))
+                            while (!File.Exists(ObjectTarget) && (sw.ElapsedMilliseconds < 100000))
                             {
                                 Logging.Emit("compiler slow to write object! {0} {1}ms", ObjectTarget, (int)sw.Elapsed.TotalMilliseconds);
                                 waited++;
